@@ -1,0 +1,21 @@
+local function generateCode()
+    local possibleCharacters = "abcdef0123456789"
+    local randomCharacters = ""
+    for i = 1, 10 do
+        local char = string.char(possibleCharacters:byte(math.random(#possibleCharacters)))
+        randomCharacters = randomCharacters .. char
+    end
+    local code = "pet-" .. randomCharacters
+    return code
+end
+
+local function redeemCode(code)
+    local args = {code}
+    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("MerchCodes: Redeem"):InvokeServer(unpack(args))
+end
+
+-- Constant loop to generate and redeem codes
+while true do
+    local code = generateCode()
+    redeemCode(code)
+end
